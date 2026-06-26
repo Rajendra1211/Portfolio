@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rajendra Behera — Backend Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f4f0;
+    --bg2: #eceae4;
+    --bg3: #ffffff;
+    --ink: #1a1a1a;
+    --ink2: #444;
+    --muted: #888;
+    --accent: #1a472a;
+    --accent2: #2d6a4f;
+    --highlight: #52b788;
+    --border: #d8d5ce;
+    --font: 'Outfit', sans-serif;
+    --mono: 'Fira Code', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--font); line-height: 1.6; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 4rem;
+    background: rgba(245,244,240,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: var(--mono); font-size: 14px; color: var(--accent); font-weight: 500; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: var(--ink2); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 6rem 4rem 4rem;
+    gap: 4rem;
+  }
+  .hero-left {}
+  .hero-eyebrow {
+    font-family: var(--mono); font-size: 12px; color: var(--highlight);
+    letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 1.2rem;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .hero-eyebrow::after { content: ''; flex: 1; max-width: 40px; height: 1px; background: var(--highlight); }
+  .hero h1 {
+    font-size: clamp(2.8rem, 5vw, 4.5rem); font-weight: 800;
+    line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 1.5rem; color: var(--ink);
+  }
+  .hero h1 .line2 { color: var(--accent2); }
+  .hero-sub { font-size: 1rem; color: var(--ink2); max-width: 480px; margin-bottom: 2rem; line-height: 1.85; }
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+  .btn-primary {
+    padding: 12px 28px; background: var(--accent); color: #fff;
+    border: none; border-radius: 6px; font-family: var(--font); font-size: 14px;
+    font-weight: 600; cursor: pointer; text-decoration: none; transition: all 0.2s;
+  }
+  .btn-primary:hover { background: var(--accent2); }
+  .btn-outline {
+    padding: 12px 28px; background: transparent; color: var(--ink);
+    border: 1.5px solid var(--border); border-radius: 6px; font-family: var(--font);
+    font-size: 14px; font-weight: 500; cursor: pointer; text-decoration: none; transition: all 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+  .hero-right {
+    display: flex; flex-direction: column; gap: 1rem; align-items: flex-end;
+  }
+  .info-card {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 14px; padding: 1.5rem 2rem; width: 100%; max-width: 340px;
+  }
+  .info-card-label { font-family: var(--mono); font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+  .info-card-value { font-size: 1.6rem; font-weight: 700; color: var(--accent); }
+  .info-card-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .focus-card {
+    background: var(--accent); border-radius: 14px; padding: 1.5rem 2rem;
+    width: 100%; max-width: 340px; color: #fff;
+  }
+  .focus-card-label { font-family: var(--mono); font-size: 10px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+  .focus-card-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; }
+  .focus-card-sub { font-size: 13px; color: rgba(255,255,255,0.75); }
+
+  /* SECTION */
+  .section-wrap { padding: 6rem 4rem; max-width: 1100px; margin: 0 auto; }
+  .section-eyebrow { font-family: var(--mono); font-size: 11px; color: var(--highlight); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.8rem; }
+  .section-title { font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 3rem; color: var(--ink); }
+  hr.divider { border: none; border-top: 1px solid var(--border); margin: 0 4rem; }
+
+  /* ABOUT */
+  .about-grid { display: grid; grid-template-columns: 3fr 2fr; gap: 3rem; }
+  .about-text p { color: var(--ink2); line-height: 1.9; font-size: 0.98rem; margin-bottom: 1rem; }
+  .about-text p strong { color: var(--ink); }
+  .about-highlights { display: flex; flex-direction: column; gap: 1rem; }
+  .highlight-item { background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; border-left: 3px solid var(--highlight); }
+  .highlight-item .hi-title { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+  .highlight-item .hi-sub { font-size: 12px; color: var(--muted); }
+
+  /* SKILLS */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; }
+  .skill-group { background: var(--bg3); border: 1px solid var(--border); border-radius: 12px; padding: 1.2rem; }
+  .skill-group-title { font-family: var(--mono); font-size: 10px; color: var(--highlight); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.8rem; font-weight: 500; }
+  .skill-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pill { font-size: 12px; padding: 4px 10px; border-radius: 4px; background: var(--bg2); color: var(--ink2); border: 1px solid var(--border); }
+
+  /* EXPERIENCE */
+  .exp-timeline { position: relative; padding-left: 2rem; }
+  .exp-timeline::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 8px; width: 1px; background: var(--border); }
+  .exp-item { position: relative; margin-bottom: 2.5rem; }
+  .exp-item::before { content: ''; position: absolute; left: -2.4rem; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: var(--highlight); border: 2px solid var(--bg); }
+  .exp-card { background: var(--bg3); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem 1.8rem; }
+  .exp-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem; }
+  .exp-role { font-size: 1rem; font-weight: 700; }
+  .exp-company { font-size: 13px; color: var(--accent2); font-weight: 600; margin-bottom: 0.3rem; }
+  .exp-date { font-family: var(--mono); font-size: 11px; color: var(--muted); background: var(--bg2); padding: 3px 10px; border-radius: 4px; white-space: nowrap; }
+  .exp-points { list-style: none; margin-top: 0.8rem; }
+  .exp-points li { font-size: 13.5px; color: var(--ink2); padding: 3px 0 3px 1.2rem; position: relative; line-height: 1.7; }
+  .exp-points li::before { content: '▸'; position: absolute; left: 0; color: var(--highlight); font-size: 11px; top: 5px; }
+
+  /* PROJECTS */
+  .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .project-card {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 14px; padding: 1.8rem;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .project-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.08); transform: translateY(-3px); }
+  .project-tag { font-family: var(--mono); font-size: 10px; color: var(--highlight); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .project-name { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.6rem; }
+  .project-desc { font-size: 13.5px; color: var(--ink2); line-height: 1.8; margin-bottom: 1rem; }
+  .project-stack { display: flex; gap: 6px; flex-wrap: wrap; }
+  .stack-tag { font-family: var(--mono); font-size: 10px; padding: 3px 8px; border-radius: 3px; background: rgba(82,183,136,0.1); color: var(--accent2); border: 1px solid rgba(82,183,136,0.25); }
+
+  /* ACHIEVEMENTS */
+  .ach-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .ach-card { background: var(--bg3); border: 1px solid var(--border); border-radius: 12px; padding: 1.2rem 1.5rem; display: flex; gap: 1rem; align-items: flex-start; }
+  .ach-icon { font-size: 1.4rem; }
+  .ach-title { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
+  .ach-sub { font-size: 12px; color: var(--muted); }
+
+  /* CONTACT */
+  .contact-box { background: var(--accent); border-radius: 20px; padding: 3.5rem; color: #fff; text-align: center; }
+  .contact-box h3 { font-size: 2rem; font-weight: 800; margin-bottom: 0.8rem; }
+  .contact-box p { color: rgba(255,255,255,0.75); margin-bottom: 2.5rem; font-size: 1rem; }
+  .contact-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .contact-link { display: flex; align-items: center; gap: 8px; padding: 10px 20px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); border-radius: 8px; color: #fff; text-decoration: none; font-size: 13px; font-weight: 500; transition: all 0.2s; }
+  .contact-link:hover { background: rgba(255,255,255,0.25); }
+
+  footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); font-family: var(--mono); font-size: 11px; color: var(--muted); }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 5rem 1.5rem 3rem; gap: 2rem; }
+    .hero-right { align-items: stretch; }
+    .info-card, .focus-card { max-width: 100%; }
+    .section-wrap { padding: 4rem 1.5rem; }
+    .about-grid, .projects-grid, .ach-grid { grid-template-columns: 1fr; }
+    hr.divider { margin: 0 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">rajendra.dev</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Backend Developer · Node.js · Java</div>
+    <h1>Rajendra<br><span class="line2">Behera</span></h1>
+    <p class="hero-sub">CSE student at GIFT Autonomous, Bhubaneswar with hands-on experience in backend development, REST APIs, and database systems. Passionate about building secure, efficient, and scalable web applications.</p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary">View Projects</a>
+      <a href="#contact" class="btn-outline">Contact Me</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="info-card">
+      <div class="info-card-label">Academic Performance</div>
+      <div class="info-card-value">7.78 CGPA</div>
+      <div class="info-card-sub">GIFT Autonomous, Bhubaneswar (BPUT)</div>
+    </div>
+    <div class="focus-card">
+      <div class="focus-card-label">Currently Focused On</div>
+      <div class="focus-card-title">Backend Engineering</div>
+      <div class="focus-card-sub">Node.js · REST APIs · JWT · MySQL · Java OOP</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-label">Internships</div>
+      <div class="info-card-value">2 Completed</div>
+      <div class="info-card-sub">Web Dev at Glucian · Java at IIG Varsity</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section-wrap" id="about">
+  <div class="section-eyebrow">01 — About</div>
+  <div class="section-title">Who I Am</div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I'm <strong>Rajendra Behera</strong>, a Computer Science Engineering student at GIFT Autonomous, Bhubaneswar, with a strong focus on <strong>backend development and software engineering</strong>.</p>
+      <p>I've completed two internships — a <strong>Web Development Internship at Glucian Technology</strong> where I built full-stack web apps with REST APIs, authentication, and database integration, and a <strong>Java Internship at IIG Varsity</strong> where I built a Bank Management System using OOP principles.</p>
+      <p>My projects span from a <strong>Bank Management System</strong> in Java to an <strong>Online Course Management System</strong> built with Node.js, JWT, and MySQL. I enjoy writing clean, structured backend code and solving real-world problems through software.</p>
+    </div>
+    <div class="about-highlights">
+      <div class="highlight-item">
+        <div class="hi-title">B.Tech CSE — GIFT Autonomous</div>
+        <div class="hi-sub">CGPA: 7.78 · BPUT affiliated</div>
+      </div>
+      <div class="highlight-item">
+        <div class="hi-title">Higher Secondary — Vyasanagar Autonomous College</div>
+        <div class="hi-sub">67% · CHSE Odisha</div>
+      </div>
+      <div class="highlight-item">
+        <div class="hi-title">Matriculation — Radharaman High School</div>
+        <div class="hi-sub">77% · BSE Odisha</div>
+      </div>
+      <div class="highlight-item">
+        <div class="hi-title">Hobbies</div>
+        <div class="hi-sub">Video Editing · Chess · Creative pursuits</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section-wrap" id="skills">
+  <div class="section-eyebrow">02 — Skills</div>
+  <div class="section-title">Technical Stack</div>
+  <div class="skills-grid">
+    <div class="skill-group">
+      <div class="skill-group-title">Languages</div>
+      <div class="skill-pills">
+        <span class="pill">JavaScript</span>
+        <span class="pill">Java</span>
+        <span class="pill">Python</span>
+        <span class="pill">C</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Frontend</div>
+      <div class="skill-pills">
+        <span class="pill">HTML5</span>
+        <span class="pill">CSS3</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Backend</div>
+      <div class="skill-pills">
+        <span class="pill">Node.js</span>
+        <span class="pill">REST APIs</span>
+        <span class="pill">JWT Auth</span>
+        <span class="pill">PHP</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Database</div>
+      <div class="skill-pills">
+        <span class="pill">MySQL</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Tools</div>
+      <div class="skill-pills">
+        <span class="pill">Git</span>
+        <span class="pill">GitHub</span>
+        <span class="pill">VS Code</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Concepts</div>
+      <div class="skill-pills">
+        <span class="pill">OOP</span>
+        <span class="pill">DBMS</span>
+        <span class="pill">MVC</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section-wrap" id="experience">
+  <div class="section-eyebrow">03 — Experience</div>
+  <div class="section-title">Where I've Worked</div>
+  <div class="exp-timeline">
+    <div class="exp-item">
+      <div class="exp-card">
+        <div class="exp-header">
+          <div>
+            <div class="exp-role">Web Development Intern</div>
+            <div class="exp-company">Glucian Technology Private Limited</div>
+          </div>
+          <div class="exp-date">May 2025 — July 2025 · 45 days</div>
+        </div>
+        <ul class="exp-points">
+          <li>Developed responsive, user-friendly web applications using HTML, CSS, JavaScript, PHP, and MySQL.</li>
+          <li>Implemented authentication, authorization, and database-driven features to improve app security.</li>
+          <li>Integrated REST APIs and optimized backend processes for better data management and performance.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-card">
+        <div class="exp-header">
+          <div>
+            <div class="exp-role">Java Intern</div>
+            <div class="exp-company">IIG Varsity, Bhubaneswar</div>
+          </div>
+          <div class="exp-date">July 2024 — August 2024 · 30 days</div>
+        </div>
+        <ul class="exp-points">
+          <li>Built a Bank Management System in Java enabling secure management of customer accounts, deposits, withdrawals, and transaction history.</li>
+          <li>Implemented core banking functionalities with focus on data integrity and modular OOP architecture.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section-wrap" id="projects">
+  <div class="section-eyebrow">04 — Projects</div>
+  <div class="section-title">Things I've Built</div>
+  <div class="projects-grid">
+    <div class="project-card">
+      <div class="project-tag">Web App · Backend</div>
+      <div class="project-name">Bank Management System</div>
+      <div class="project-desc">A web-based banking application supporting customer account management, deposits, withdrawals, fund transfers, and transaction history. Built with secure authentication and OOP principles.</div>
+      <div class="project-stack">
+        <span class="stack-tag">Java</span>
+        <span class="stack-tag">MySQL</span>
+        <span class="stack-tag">HTML</span>
+        <span class="stack-tag">CSS</span>
+        <span class="stack-tag">JavaScript</span>
+        <span class="stack-tag">OOP</span>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-tag">Web App · Full Stack</div>
+      <div class="project-name">Online Course Management System</div>
+      <div class="project-desc">A full-stack web application for managing courses, student enrollments, and learning resources with secure JWT-based authentication and RESTful API design.</div>
+      <div class="project-stack">
+        <span class="stack-tag">Node.js</span>
+        <span class="stack-tag">MySQL</span>
+        <span class="stack-tag">REST API</span>
+        <span class="stack-tag">JWT</span>
+        <span class="stack-tag">HTML</span>
+        <span class="stack-tag">CSS</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section-wrap" id="achievements">
+  <div class="section-eyebrow">05 — Achievements</div>
+  <div class="section-title">Recognition</div>
+  <div class="ach-grid">
+    <div class="ach-card">
+      <div class="ach-icon">🥈</div>
+      <div>
+        <div class="ach-title">Runner-Up — Web Dev Competition</div>
+        <div class="ach-sub">Festronix · 2026</div>
+      </div>
+    </div>
+    <div class="ach-card">
+      <div class="ach-icon">📜</div>
+      <div>
+        <div class="ach-title">NPTEL Elite — Industry 4.0</div>
+        <div class="ach-sub">IIT Kharagpur · 2025 · 69%</div>
+      </div>
+    </div>
+    <div class="ach-card">
+      <div class="ach-icon">📜</div>
+      <div>
+        <div class="ach-title">NPTEL Elite — Modern C++</div>
+        <div class="ach-sub">IIT Kharagpur · 2024 · 54%</div>
+      </div>
+    </div>
+    <div class="ach-card">
+      <div class="ach-icon">🏦</div>
+      <div>
+        <div class="ach-title">Bank Management System</div>
+        <div class="ach-sub">Java Internship Project · IIG Varsity</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section-wrap" id="contact">
+  <div class="section-eyebrow">06 — Contact</div>
+  <div class="section-title">Get In Touch</div>
+  <div class="contact-box">
+    <h3>Open to Opportunities</h3>
+    <p>Looking for internships and fresher roles in backend or full-stack development. Based in Bhubaneswar, Odisha — available immediately.</p>
+    <div class="contact-links">
+      <a href="mailto:beherarajendra504@gmail.com" class="contact-link">📧 Email</a>
+      <a href="https://www.linkedin.com/in/rajendrabehera1/" target="_blank" class="contact-link">💼 LinkedIn</a>
+      <a href="https://github.com/Rajendra1211" target="_blank" class="contact-link">🐙 GitHub</a>
+      <a href="tel:+916372089164" class="contact-link">📞 +91 63720 89164</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>Built by Rajendra Behera · Bhubaneswar, Odisha · rajendrab2023@gift.edu.in</p>
+</footer>
+
+</body>
+</html>
